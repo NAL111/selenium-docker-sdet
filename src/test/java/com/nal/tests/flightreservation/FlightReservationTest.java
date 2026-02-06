@@ -24,12 +24,23 @@ public class FlightReservationTest {
     @BeforeTest
     @Parameters({"numOfPassengers", "expectedPrice"})
     public void setDriver(String numOfPassengers, String expectedPrice) {
+        this.numOfPassengers = numOfPassengers; // bug if commented out
+        this.expectedPrice = expectedPrice;
         WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
         this.driver = new ChromeDriver(options);
         this.driver.manage().window().maximize();
     }
+
+//    @BeforeTest
+//    public void setDriver() {
+//        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
+//        ChromeOptions options = new ChromeOptions();
+//        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
+//        this.driver = new ChromeDriver(options);
+//        this.driver.manage().window().maximize();
+//    }
 
     @Test
     public void userRegistrationTest() {
@@ -55,6 +66,7 @@ public class FlightReservationTest {
         FlightsSearchPage flightsSearchPage = new FlightsSearchPage(driver);
         Assert.assertTrue(flightsSearchPage.isAt());
         flightsSearchPage.selectPassengers(numOfPassengers);
+//        flightsSearchPage.selectPassengers("1");
         flightsSearchPage.searchFlight();
     }
 
@@ -71,6 +83,7 @@ public class FlightReservationTest {
         FlightConfirmationPage flightConfirmationPage = new FlightConfirmationPage(driver);
         Assert.assertTrue(flightConfirmationPage.isAt());
         Assert.assertEquals(flightConfirmationPage.getPrice(), expectedPrice);
+//        Assert.assertEquals(flightConfirmationPage.getPrice(), "$584 USD");
     }
 
     @AfterTest
