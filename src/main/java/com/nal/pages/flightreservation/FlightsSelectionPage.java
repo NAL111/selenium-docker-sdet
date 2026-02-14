@@ -39,5 +39,4 @@ public class FlightsSelectionPage extends AbstractPage {
     public void confirmFlights() {
         this.confirmFlightsButton.click();
     }
-
 }

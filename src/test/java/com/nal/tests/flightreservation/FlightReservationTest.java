@@ -1,6 +1,7 @@
 package com.nal.tests.flightreservation;
 
 import com.nal.pages.flightreservation.*;
+import com.nal.tests.AbstractTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,22 +16,23 @@ import org.testng.annotations.Test;
  * Created by N on 2/5/2026
  **/
 
-public class FlightReservationTest {
+public class FlightReservationTest extends AbstractTest {
 
-    private WebDriver driver;
+//    private WebDriver driver;
     private String numOfPassengers;
     private String expectedPrice;
 
     @BeforeTest
     @Parameters({"numOfPassengers", "expectedPrice"})
-    public void setDriver(String numOfPassengers, String expectedPrice) {
+//    public void setDriver(String numOfPassengers, String expectedPrice) {
+    public void setParameters(String numOfPassengers, String expectedPrice) {
         this.numOfPassengers = numOfPassengers; // bug if commented out
         this.expectedPrice = expectedPrice;
-        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
-        this.driver = new ChromeDriver(options);
-        this.driver.manage().window().maximize();
+//        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
+//        ChromeOptions options = new ChromeOptions();
+//        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
+//        this.driver = new ChromeDriver(options);
+//        this.driver.manage().window().maximize();
     }
 
 //    @BeforeTest
@@ -86,9 +88,9 @@ public class FlightReservationTest {
 //        Assert.assertEquals(flightConfirmationPage.getPrice(), "$584 USD");
     }
 
-    @AfterTest
-    public void quitDriver() {
-        this.driver.quit();
-    }
+//    @AfterTest
+//    public void quitDriver() {
+//        this.driver.quit();
+//    }
 
 }

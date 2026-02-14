@@ -39,5 +39,4 @@ public class FlightConfirmationPage extends AbstractPage {
         log.info("Total price: ${}", price);
         return price;
     }
-
 }
