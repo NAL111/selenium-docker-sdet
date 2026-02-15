@@ -2,29 +2,34 @@
 <suite name="flight-reservation-test">
 
     <test name="passengers-count-1">
-        <parameter name="numOfPassengers" value="1" />
-        <parameter name="expectedPrice" value="$584 USD" />
+<!--        <parameter name="numOfPassengers" value="1" />-->
+<!--        <parameter name="expectedPrice" value="$584 USD" />-->
+        <parameter name="testDataPath" value="test-data/flight-reservation/passenger-1.json" />
+
         <classes>
             <class name="com.nal.tests.flightreservation.FlightReservationTest"/>
         </classes>
     </test>
     <test name="passengers-count-2">
-        <parameter name="numOfPassengers" value="2" />
-        <parameter name="expectedPrice" value="$1169 USD" />
+<!--        <parameter name="numOfPassengers" value="2" />-->
+<!--        <parameter name="expectedPrice" value="$1169 USD" />-->
+        <parameter name="testDataPath" value="test-data/flight-reservation/passenger-2.json" />
         <classes>
             <class name="com.nal.tests.flightreservation.FlightReservationTest"/>
         </classes>
     </test>
     <test name="passengers-count-3">
-        <parameter name="numOfPassengers" value="3" />
-        <parameter name="expectedPrice" value="$1753 USD" />
+<!--        <parameter name="numOfPassengers" value="3" />-->
+<!--        <parameter name="expectedPrice" value="$1753 USD" />-->
+        <parameter name="testDataPath" value="test-data/flight-reservation/passenger-3.json" />
         <classes>
             <class name="com.nal.tests.flightreservation.FlightReservationTest"/>
         </classes>
     </test>
     <test name="passengers-count-4">
-        <parameter name="numOfPassengers" value="4" />
-        <parameter name="expectedPrice" value="$2338 USD" />
+<!--        <parameter name="numOfPassengers" value="4" />-->
+<!--        <parameter name="expectedPrice" value="$2338 USD" />-->
+        <parameter name="testDataPath" value="test-data/flight-reservation/passenger-4.json" />
         <classes>
             <class name="com.nal.tests.flightreservation.FlightReservationTest"/>
         </classes>

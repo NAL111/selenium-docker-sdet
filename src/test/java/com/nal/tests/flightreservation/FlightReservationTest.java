@@ -2,6 +2,8 @@ package com.nal.tests.flightreservation;
 
 import com.nal.pages.flightreservation.*;
 import com.nal.tests.AbstractTest;
+import com.nal.tests.flightreservation.model.FlightReservationTestData;
+import com.nal.util.JsonUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,15 +21,19 @@ import org.testng.annotations.Test;
 public class FlightReservationTest extends AbstractTest {
 
 //    private WebDriver driver;
-    private String numOfPassengers;
-    private String expectedPrice;
+//    private String numOfPassengers;
+//    private String expectedPrice;
+    private FlightReservationTestData testData;
 
     @BeforeTest
-    @Parameters({"numOfPassengers", "expectedPrice"})
+//    @Parameters({"numOfPassengers", "expectedPrice"})
+    @Parameters("testDataPath")
 //    public void setDriver(String numOfPassengers, String expectedPrice) {
-    public void setParameters(String numOfPassengers, String expectedPrice) {
-        this.numOfPassengers = numOfPassengers; // bug if commented out
-        this.expectedPrice = expectedPrice;
+//    public void setParameters(String numOfPassengers, String expectedPrice) {
+    public void setParameters(String testDataPath) {
+//        this.numOfPassengers = numOfPassengers; // bug if commented out
+//        this.expectedPrice = expectedPrice;
+        this.testData = JsonUtil.getTestData(testDataPath, FlightReservationTestData.class);
 //        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
 //        ChromeOptions options = new ChromeOptions();
 //        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
@@ -50,9 +56,12 @@ public class FlightReservationTest extends AbstractTest {
         registrationPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/reservation-app/index.html");
         Assert.assertTrue(registrationPage.isAt());
 
-        registrationPage.enterUserDetails("selenium", "docker");
-        registrationPage.enterUserCredentials("selenium@docker.com", "docker");
-        registrationPage.enterUserAddress("123 some street", "state", "11123");
+//        registrationPage.enterUserDetails("selenium", "docker");
+        registrationPage.enterUserDetails(testData.firstName(), testData.lastName());
+//        registrationPage.enterUserCredentials("selenium@docker.com", "docker");
+        registrationPage.enterUserCredentials(testData.email(), testData.password());
+//        registrationPage.enterUserAddress("123 some street", "state", "11123");
+        registrationPage.enterUserAddress(testData.street(), testData.city(), testData.zip());
         registrationPage.register();
     }
 
@@ -60,6 +69,7 @@ public class FlightReservationTest extends AbstractTest {
     public void registrationConfirmationTest() {
         RegistrationConfirmationPage registrationConfirmationPage = new RegistrationConfirmationPage(driver);
         Assert.assertTrue(registrationConfirmationPage.isAt());
+        Assert.assertEquals(registrationConfirmationPage.getFirstName(), testData.firstName());
         registrationConfirmationPage.goToFlightsSearch();
     }
 
@@ -67,8 +77,9 @@ public class FlightReservationTest extends AbstractTest {
     public void flightsSearchTest() {
         FlightsSearchPage flightsSearchPage = new FlightsSearchPage(driver);
         Assert.assertTrue(flightsSearchPage.isAt());
-        flightsSearchPage.selectPassengers(numOfPassengers);
 //        flightsSearchPage.selectPassengers("1");
+//        flightsSearchPage.selectPassengers(numOfPassengers);
+        flightsSearchPage.selectPassengers(testData.passengersCount());
         flightsSearchPage.searchFlight();
     }
 
@@ -84,8 +95,9 @@ public class FlightReservationTest extends AbstractTest {
     public void flightReservationConfirmationTest() {
         FlightConfirmationPage flightConfirmationPage = new FlightConfirmationPage(driver);
         Assert.assertTrue(flightConfirmationPage.isAt());
-        Assert.assertEquals(flightConfirmationPage.getPrice(), expectedPrice);
 //        Assert.assertEquals(flightConfirmationPage.getPrice(), "$584 USD");
+//        Assert.assertEquals(flightConfirmationPage.getPrice(), expectedPrice);
+        Assert.assertEquals(flightConfirmationPage.getPrice(), testData.expectedPrice());
     }
 
 //    @AfterTest

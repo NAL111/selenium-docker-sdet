@@ -26,4 +26,5 @@ public class ResourceLoader {
         }
         return Files.newInputStream(Path.of(path));
     }
+
 }

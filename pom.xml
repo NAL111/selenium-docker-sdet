@@ -29,6 +29,7 @@
         <!-- output directory -->
         <package.directory>${project.build.directory}/docker-resources</package.directory>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -64,6 +65,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <finalName>selenium-docker</finalName>
         <plugins>

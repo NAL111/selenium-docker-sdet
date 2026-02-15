@@ -21,7 +21,8 @@ public class Demo {
         System.out.println(content);
         System.out.println(content2);
 
-        VendorPortalTestData testData = JsonUtil.getTestData("test-data/vendor-portal/john.json");
+//        VendorPortalTestData testData = JsonUtil.getTestData("test-data/vendor-portal/john.json");
+        VendorPortalTestData testData = JsonUtil.getTestData("test-data/vendor-portal/john.json", VendorPortalTestData.class);
         System.out.println(testData.monthlyEarnings());
         System.out.println(testData.searchResultsCount());
         System.out.println(testData.username());

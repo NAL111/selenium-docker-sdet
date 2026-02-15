@@ -30,5 +30,4 @@ public abstract class AbstractTest {
     public void quitDriver() {
         this.driver.quit();
     }
-
 }
