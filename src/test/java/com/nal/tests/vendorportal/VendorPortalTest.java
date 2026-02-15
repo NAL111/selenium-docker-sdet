@@ -14,6 +14,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.annotations.Optional;
 
 /**
  * Created by N on 2/12/2026
@@ -30,6 +31,7 @@ public class VendorPortalTest extends AbstractTest {
     @Parameters("testDataPath")
 //    public void setDriver() {
     public void setPageObjects(String testDataPath) {
+//    public void setPageObjects(@Optional("test-data/vendor-portal/mike.json") String testDataPath) {
 //        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
 //        ChromeOptions options = new ChromeOptions();
 //        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
