@@ -26,5 +26,9 @@ public class Demo {
         System.out.println(testData.monthlyEarnings());
         System.out.println(testData.searchResultsCount());
         System.out.println(testData.username());
+
+        System.setProperty("browser", "edge");
+        Config.initialize();
+        System.out.println(Config.get("selenium.grid.hubHost"));
     }
 }

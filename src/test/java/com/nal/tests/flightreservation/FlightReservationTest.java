@@ -3,6 +3,8 @@ package com.nal.tests.flightreservation;
 import com.nal.pages.flightreservation.*;
 import com.nal.tests.AbstractTest;
 import com.nal.tests.flightreservation.model.FlightReservationTestData;
+import com.nal.util.Config;
+import com.nal.util.Constants;
 import com.nal.util.JsonUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -53,7 +55,8 @@ public class FlightReservationTest extends AbstractTest {
     @Test
     public void userRegistrationTest() {
         RegistrationPage registrationPage = new RegistrationPage(driver);
-        registrationPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/reservation-app/index.html");
+//        registrationPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/reservation-app/index.html");
+        registrationPage.goTo(Config.get(Constants.FLIGHT_RESERVATION_URL));
         Assert.assertTrue(registrationPage.isAt());
 
 //        registrationPage.enterUserDetails("selenium", "docker");

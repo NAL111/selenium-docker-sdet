@@ -4,6 +4,8 @@ import com.nal.pages.vendorportal.DashboardPage;
 import com.nal.pages.vendorportal.LoginPage;
 import com.nal.tests.AbstractTest;
 import com.nal.tests.vendorportal.model.VendorPortalTestData;
+import com.nal.util.Config;
+import com.nal.util.Constants;
 import com.nal.util.JsonUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -45,7 +47,8 @@ public class VendorPortalTest extends AbstractTest {
     @Test
     public void loginTest() {
 //        LoginPage loginPage = new LoginPage(driver);
-        loginPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/vendor-app/index.html");
+//        loginPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/vendor-app/index.html");
+        loginPage.goTo(Config.get(Constants.VENDOR_PORTAL_URL));
         Assert.assertTrue(loginPage.isAt());
 //        loginPage.login("sam", "sam");
         loginPage.login(testData.username(), testData.password());
