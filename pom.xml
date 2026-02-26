@@ -27,6 +27,7 @@
         <maven.surefire.version>3.1.2</maven.surefire.version>
         <maven.resources.plugin>3.3.1</maven.resources.plugin>
         <!-- output directory -->
+        <!--  package dir is a custom prop, proj.build.dir is the target dir -->
         <package.directory>${project.build.directory}/docker-resources</package.directory>
     </properties>
 
@@ -86,20 +87,23 @@
                 <configuration>
 <!--                    mvn clean test -Dbrowser=chrome -Dselenium.grid.enabled=true-->
                     <systemPropertyVariables>
-                        <browser>chrome</browser>
+<!--                        <browser>chrome</browser>-->
 <!--                        <browser>firefox</browser>-->
-<!--                        <browser>edge</browser>-->
+                        <browser>edge</browser>
 <!--                        <selenium.grid.enabled>false</selenium.grid.enabled>-->
                         <selenium.grid.enabled>true</selenium.grid.enabled>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
-                        <file>test-suite.xml</file>
+<!--                        <file>test-suite.xml</file>-->
+                        <file>src/test/resources/test-suites/vendor-portal.xml</file>
+                        <file>src/test/resources/test-suites/flight-reservation.xml</file>
                     </suiteXmlFiles>
-                    <threadCount>1</threadCount>
+                    <threadCount>4</threadCount>
                     <reportsDirectory>target/test-output</reportsDirectory>
                 </configuration>
             </plugin>
-            <!-- To copy all the dependencies to run our tests as part of "mvn package" -->
+            <!-- To copy all the dependencies to run our tests/scripts as part of "mvn package" -->
+            <!-- To copy all the dependencies/external libs/jars and will keep it under the package dir-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -130,34 +134,35 @@
                 <executions>
                     <execution>
                         <goals>
+                            <!-- By default maven does not include test so need to add it-->
                             <goal>test-jar</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
             <!-- To copy resources into the output directory -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.plugin}</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${package.directory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/test/resources</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-resources-plugin</artifactId>-->
+<!--                <version>${maven.resources.plugin}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-resources</id>-->
+<!--                        <phase>prepare-package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-resources</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${package.directory}</outputDirectory>-->
+<!--                            <resources>-->
+<!--                                <resource>-->
+<!--                                    <directory>src/test/resources</directory>-->
+<!--                                </resource>-->
+<!--                            </resources>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

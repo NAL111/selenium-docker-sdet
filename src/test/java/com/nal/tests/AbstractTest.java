@@ -1,5 +1,7 @@
 package com.nal.tests;
 
+import com.google.common.util.concurrent.Uninterruptibles;
+import com.nal.listener.TestListener;
 import com.nal.pages.vendorportal.DashboardPage;
 import com.nal.pages.vendorportal.LoginPage;
 import com.nal.util.Config;
@@ -14,19 +16,19 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Objects;
 
 /**
  * Created by N on 2/13/2026
  **/
 
+@Listeners({TestListener.class})
 public abstract class AbstractTest {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractTest.class);
@@ -65,7 +67,7 @@ public abstract class AbstractTest {
 //    }
 
     @BeforeTest
-    public void setDriver() throws MalformedURLException {
+    public void setDriver(ITestContext testContext) throws MalformedURLException {
 
 //        if (Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED))) {
 //            this.driver = getRemoteDriver();
@@ -76,6 +78,7 @@ public abstract class AbstractTest {
 
         this.driver = Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ?
                 getRemoteDriver() : getLocalBraveDriver(); this.driver.manage().window().maximize();
+        testContext.setAttribute(Constants.DRIVER, this.driver);
 
 //        if (Boolean.getBoolean("selenium.grid.enabled")) {
 //            this.driver = getRemoteDriver();
@@ -158,5 +161,11 @@ public abstract class AbstractTest {
     @AfterTest
     public void quitDriver() {
         this.driver.quit();
+    }
+
+    @AfterMethod
+    public void sleep() {
+        // All test methods will wait for 5 secs if we want to observe tests running in grid browsers
+        Uninterruptibles.sleepUninterruptibly(Duration.ofSeconds(5));
     }
 }
