@@ -12,12 +12,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
-import org.testng.annotations.*;
+//import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Listeners;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -80,6 +87,10 @@ public abstract class AbstractTest {
                 getRemoteDriver() : getLocalBraveDriver(); this.driver.manage().window().maximize();
         testContext.setAttribute(Constants.DRIVER, this.driver);
 
+//        this.driver = Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ?
+//                getRemoteDriver() : getLocalFirefoxDriver(); this.driver.manage().window().maximize();
+//        testContext.setAttribute(Constants.DRIVER, this.driver);
+
 //        if (Boolean.getBoolean("selenium.grid.enabled")) {
 //            this.driver = getRemoteDriver();
 //        } else {
@@ -104,9 +115,11 @@ public abstract class AbstractTest {
         //Selenium hub path to send our requests: http://localhost:4444/wd/hub
 
         Capabilities capabilities = new ChromeOptions();
-        if (Constants.FIREFOX.equalsIgnoreCase(Config.get(Constants.BROWSER))) {
+//        if (Constants.FIREFOX.equalsIgnoreCase(Config.get(Constants.BROWSER))) {
+        if (Config.get(Constants.BROWSER).equalsIgnoreCase(Constants.FIREFOX)) {
             capabilities = new FirefoxOptions();
-        } else if (Constants.EDGE.equalsIgnoreCase(Config.get(Constants.BROWSER))) {
+//        } else if (Constants.EDGE.equalsIgnoreCase(Config.get(Constants.BROWSER))) {
+        } else if (Config.get(Constants.BROWSER).equalsIgnoreCase(Constants.EDGE)) {
             capabilities = new EdgeOptions();
         }
 
@@ -131,7 +144,7 @@ public abstract class AbstractTest {
     private WebDriver getRemoteDriverFromParams(String browser) throws MalformedURLException {
 
         // Enable Selenium Grid and Disable System property variables for browsers in pom.xml
-        // Based on browser params defined for each tests in testng.xml
+        // Based on browser params defined for each test in testng.xml
 
         Capabilities capabilities;
         if (browser.equalsIgnoreCase("chrome")) {
@@ -152,10 +165,16 @@ public abstract class AbstractTest {
     }
 
     private WebDriver getLocalBraveDriver() {
-        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
+//        WebDriverManager.chromedriver().driverVersion("144.0.7559.133").setup();
+        WebDriverManager.chromedriver().driverVersion("146.0.7680.164").setup();
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
         return new ChromeDriver(options);
+    }
+
+    private WebDriver getLocalFirefoxDriver() {
+        WebDriverManager.firefoxdriver().setup();
+        return new FirefoxDriver();
     }
 
     @AfterTest
@@ -163,9 +182,9 @@ public abstract class AbstractTest {
         this.driver.quit();
     }
 
-    @AfterMethod
-    public void sleep() {
-        // All test methods will wait for 5 secs if we want to observe tests running in grid browsers
-        Uninterruptibles.sleepUninterruptibly(Duration.ofSeconds(5));
-    }
+//    @AfterMethod
+//    public void sleep() {
+//        // All test methods will wait for 5 secs if we want to observe tests running in grid browsers
+//        Uninterruptibles.sleepUninterruptibly(Duration.ofSeconds(5));
+//    }
 }
