@@ -19,13 +19,13 @@ pipeline {
         }
         stage('Push Image') {
             environment {
-                DOCKER_HUB = credentials('dockerhub-creds')
+                DOCKER_HUB = credentials('dckrhb-crds')
             }
             steps {
 //                 sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
                 bat 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
 //                 sh "docker push nal/selenium"
-                bat "docker push nal/selenium"
+                bat "docker push nal10/selenium"
             }
         }
     }
